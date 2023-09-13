@@ -20,15 +20,15 @@ def handle_client(conn, addr):
     connected = True
 
     while connected:
-        message_len = int(conn.recv(HEADER).decode(FORMAT))
-        if message_len:
-            message = conn.recv(message_len).decode(FORMAT)
-            
-            if message == "!DISCONNECT":
+        msg_len = conn.recv(HEADER).decode(FORMAT)
+        if msg_len:
+            msg_len = int(msg_len)
+            msg = conn.recv(msg_len).decode(FORMAT)
+             
+            if msg == DISCONNECT_MESSAGE:
                 connected = False
 
-            print(f"[{addr}] {message}")
-
+            print(f"[{addr}] {msg}")
 
 
 def start():
